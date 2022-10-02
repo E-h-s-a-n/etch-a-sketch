@@ -9,6 +9,47 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    
+    <div class="main-body">
+
+        <div class="header">
+            <h2>Etch a Sketch</h2>
+        </div>
+        <div class="main">
+            <div class="left-panel">
+            <h3>Drawing panel <span style="font-size: smaller;">16x16</span></h3>
+            <div class="grid-wrapper">
+                    <div class="container">
+                    </div>
+                </div>
+            </div>
+            <div class="right-panel">
+                <h3>Color Mode</h3>
+                <button class="single mode active-mode">Single</button>
+                <button class="darken mode">Darken</button>
+                <button class="lighter mode">Lighter</button>
+                <button class="random mode">Random</button>
+                <label for="random">random colors</label>
+                <select id="random">
+                    <option value="0">all colors</option>
+                    <optgroup label="-ish colors">
+                        <option value="1">Red</option>
+                        <option value="2">Yellow</option>
+                        <option value="3">Green</option>
+                        <option value="4">Cyan</option>
+                        <option value="5">Blue</option>
+                        <option value="6">magenta</option>
+                    </optgroup>
+                </select>
+                <div class="sep"></div>
+                <button class="border">borders off</button>
+                <button class="new">New</button>
+                <button class="reset">Clear</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Made by me:>) for The Odin Project</p>
+    </footer>
+
 </body>
 </html>
