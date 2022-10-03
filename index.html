@@ -16,7 +16,7 @@
         </div>
         <div class="main">
             <div class="left-panel">
-            <h3>Drawing panel <span style="font-size: smaller;">16x16</span></h3>
+            <h3>Drawing panel <span style="font-size: smaller;"></span></h3>
             <div class="grid-wrapper">
                     <div class="container">
                     </div>
@@ -24,26 +24,38 @@
             </div>
             <div class="right-panel">
                 <h3>Color Mode</h3>
-                <button class="single mode active-mode">Single</button>
-                <button class="darken mode">Darken</button>
-                <button class="lighter mode">Lighter</button>
-                <button class="random mode">Random</button>
+                <button class="mode" data-mode="single">Single</button>
+                <div class="mode-option">
+                    <label for="colorWell">color:</label>
+                    <input type="color" id="colorWell" value="#fafafa">
+                </div>
+                <button class="mode" data-mode="darken">Darken</button>
+                <div class="mode-option">
+                    <label for="darken-p">percentage:</label>
+                    <input type="number" id="darken-p" value="10">
+                </div>
+                <button class="mode" data-mode="lighter">Lighter</button>
+                <div class="mode-option">
+                    <label for="darken-p">percentage:</label>
+                    <input type="number" id="lighter-p" value="10">
+                </div>
+                <button class="mode active-mode" data-mode="random">Random</button>
                 <label for="random">random colors</label>
                 <select id="random">
                     <option value="0">all colors</option>
                     <optgroup label="-ish colors">
-                        <option value="1">Red</option>
-                        <option value="2">Yellow</option>
-                        <option value="3">Green</option>
-                        <option value="4">Cyan</option>
-                        <option value="5">Blue</option>
+                        <option value="1">red</option>
+                        <option value="2">yellow</option>
+                        <option value="3">green</option>
+                        <option value="4">cyan</option>
+                        <option value="5">blue</option>
                         <option value="6">magenta</option>
                     </optgroup>
                 </select>
                 <div class="sep"></div>
                 <button class="border">borders off</button>
                 <button class="new">New</button>
-                <button class="reset">Clear</button>
+                <button class="reset">Clear all</button>
             </div>
         </div>
     </div>
