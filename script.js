@@ -1,24 +1,12 @@
 // https://stackoverflow.com/a/13542669/
 const RGB_Linear_Shade=(p,c)=>{
+    if(c.length<9)return;
     var i=parseInt,r=Math.round,
     [a,b,c,d]=c.split(","),
-    P=p<0,
-    t=P?0:(255*p),
-    P=P?1+p:1-p;
-    return "rgb"+
-        (d?"a(":"(")+
-        r(i(a[3]=="a"?a.slice(5):a.slice(4))*P+t)+
-        ","+r(i(b)*P+t)+
-        ","+r(i(c)*P+t)+
-        (d?","+d:")");
-}
-
-const HSLtoRGB=(hsl)=>{
-    return +hsl;
-}
-
-const HEXtoRGB=(hex)=>{
-    return +hex;
+    P=p<0,t=P?0:(255*p),P=P?1+p:1-p;
+    return "rgb"+(d?"a(":"(")+
+        r(i(a[3]=="a"?a.slice(5):a.slice(4))*P+t)+","+r(i(b)*P+t)+","+
+        r(i(c)*P+t)+(d?","+d:")");
 }
 
 function getRandomInt(min, max){
@@ -27,7 +15,7 @@ function getRandomInt(min, max){
     return Math.floor(Math.random()*(max-min+1)+min);
 }
 
-// modeBtn click function
+// Color modes button click event
 function setActiveMode(){
     modeBtn.forEach((el)=>{
         el.classList.remove('active-mode');
@@ -35,6 +23,7 @@ function setActiveMode(){
     this.classList.add('active-mode');
     colorMode = this.getAttribute('data-mode');
 }
+console.clear()
 
 function createPanel(maxTile = 16){
     tileGrid.style.gridTemplateColumns = `repeat(${maxTile}, 1fr)`;
@@ -43,37 +32,46 @@ function createPanel(maxTile = 16){
     for (let i = 0; i < maxTile**2 + 0; i++) {
         const tile = document.createElement('div');
         tile.classList.add('div-borders');
-        tile.addEventListener('mouseenter', setTileColor, false);
+        // tile.addEventListener('mouseenter', setTileColor, false);
+        // tile.addEventListener('mousedown', setTileColor, false);
         tileGrid.appendChild(tile);
     }
 }
 
-// tile mouseenter function
+// tileGrid mouse-move event
 function setTileColor(ev){
     if (!ev.buttons>0) return;
-
     const r = getRandomInt;
+    const preColor = ev.target.style.backgroundColor;
     let color;
-    if (colorMode == 'random') color = `hsl(${r(360)}deg, ${r(60, 70)}%, ${r(35, 75)}%)`;
-    if (colorMode == 'single') color = singleColor;
-    // const color = RGB_Linear_Shade(-0.1, this.style.backgroundColor)
-    // this.style.backgroundColor = color;
-    this.style.backgroundColor = color;
-    
+    if (colorMode == 'random') color = `hsl(${r(359)}deg, ${r(55, 85)}%, ${r(40, 60)}%)`;
+    else if (colorMode == 'single') color = singleColor;
+    else if (colorMode == 'darken') color = RGB_Linear_Shade(-0.2, preColor);
+    else if (colorMode == 'lighter') color = RGB_Linear_Shade(0.2, preColor)
+    ev.target.style.backgroundColor = color;
+    // console.log(color);
 }
 
+// color-input change event
 const colorWell = (e)=>{
     singleColor = e.target.value;
-    console.log(`color change= ${singleColor}`)
 }
 
+// new button click event
 function newPanel(){
-    let n = prompt('max tile number', 16);
-    n = (+n) ? +n : 16;
-    n = n>90?90:n<2?2:n;
+    let n = prompt('Chose a size for the drawing pane:', 16);
+    n = (+n)?(+n):defaultSize;
+    n = n>99?99:n<2?2:n;
+    currentSize = n;
     console.log('new panel', n);
-    tileGrid.replaceChildren()
+    tileGrid.replaceChildren();
     createPanel(n);
+}
+
+// clear button click event
+function clearPanel(){
+    tileGrid.replaceChildren();
+    createPanel(currentSize)
 }
 
 
@@ -82,14 +80,27 @@ const modeBtn = document.querySelectorAll('button.mode');
 const randomSelect = document.querySelector('#random');
 const panelSizeSpan = document.querySelector('h3 span');
 
+const defaultSize = 16;
+let currentSize = defaultSize;
+
 let colorMode = 'random';
 let singleColor = 'rgb(150, 150, 150)'
 
 document.querySelector('#colorWell').addEventListener('change', colorWell);
-document.querySelector('.new').addEventListener('click', newPanel)
+document.querySelector('.new').addEventListener('click', newPanel);
+document.querySelector('.clear').addEventListener('click', clearPanel);
 
 modeBtn.forEach((el,)=>{
     el.addEventListener('click', setActiveMode);
 });
 
-createPanel(16);
+
+const main = ()=>{
+    currentSize = 24;
+    createPanel(currentSize);
+    tileGrid.addEventListener('mouseover', setTileColor);
+}
+
+window.addEventListener('load', main, false);
+
+console.log(document.styleSheets[0].cssRules.item(9).style['border']='');

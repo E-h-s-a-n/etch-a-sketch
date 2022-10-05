@@ -14,8 +14,8 @@ body {
 }
 
 .main-body {
-    width: 90%;
-    max-width: 1100px;
+    width: 95%;
+    max-width: 1200px;
     margin: 2em auto;
 }
 h2,h3,h4,select {
@@ -30,14 +30,14 @@ h2,h3,h4,select {
 .container {
     display: grid;
     border: none;
+    user-select: none;
 }
 .container > div {
-    user-select: none;
-    transition: background-color .1s ease-in-out;
+    transition: background-color 0.07s cubic-bezier(0, 0.34, 0.57, 0.01);
 }
 /* not sure how to toggle borders on all div's  */
 .div-borders {
-    border: 1px solid rgb(185, 185, 185);
+    border: none;
     border-top: none;
     border-left: none;
 }
@@ -70,21 +70,34 @@ button {
     border-radius: 2rem;
     text-align: center;
     border: none;
-    transition: all 0.2s cubic-bezier(0.215, 0.610, 0.355, 1);
+    transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
 }
 
 .active-mode {
-   transform: scale(1.05, 1);
-    box-shadow: 
-        0 0 0px 1px rgb(209, 209, 209),
-        0 0 0px 4px rgb(24, 24, 24);
+    transform: scale(1.03, 1);
+    top: 1px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(80, 80, 80);
+    box-shadow: 0 0 2px 2px rgb(0, 0, 0),
+        inset 0 0 0px 2px rgb(61, 61, 61);
+}
+button:hover {
+    background-color: rgb(32, 32, 32);
+    color: aliceblue;
+}
+.action:active{
+    
 }
 
 .mode-option {
     margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
+}
+.mode-option > input {
+    max-width: 35px;
+    height: 28px;
 }
 .mode-option-2 {
     margin-bottom: 1.2rem;
@@ -107,5 +120,6 @@ footer {
     background-color: rgb(26, 26, 26);
     color: rgb(255, 255, 255);
     padding: 0.6rem;
+    margin-top: 4rem;
     text-align: center;
 }
