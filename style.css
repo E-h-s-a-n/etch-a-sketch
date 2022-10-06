@@ -24,8 +24,9 @@ h2,h3,h4,select {
 .grid-wrapper {
     width: 700px;
     height: 700px;
-    background-color: rgba(250, 250, 250);
+    background-color: rgb(250, 250, 250);
     box-shadow: 0 0 0 3px #000;
+    border-radius: 10px;
 }
 .container {
     display: grid;
@@ -33,9 +34,9 @@ h2,h3,h4,select {
     user-select: none;
 }
 .container > div {
-    transition: background-color 0.07s cubic-bezier(0, 0.34, 0.57, 0.01);
+    transition: background-color 0.09s cubic-bezier(0, 0.34, 0.57, 0.01);
 }
-/* not sure how to toggle borders on all div's  */
+ /* index 10 */
 .div-borders {
     border: none;
     border-top: none;
@@ -50,13 +51,15 @@ h2,h3,h4,select {
 }
 
 .right-panel {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     display: flex;
+    max-width: 170px;
+    height: 700px;
     flex-flow: column nowrap;
-    border-left: 2px solid rgba(0, 0, 0, 0.6);
+    border-left: 2px solid rgba(0, 0, 0, 0.5);
     margin-left: 1.5rem;
     padding-left: 1.5rem;
-    margin-top: 3.5rem;
+    margin-top: 2.6rem;
 }
 
 button {
@@ -113,7 +116,7 @@ input[type='number'] {
 }
 
 .sep {
-    flex: 1 0 100px;
+    flex: 1 0 auto;
 }
 
 footer {

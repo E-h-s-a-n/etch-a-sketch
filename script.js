@@ -31,14 +31,12 @@ function createPanel(maxTile = 16){
     panelSizeSpan.textContent = `${maxTile}x${maxTile}`;
     for (let i = 0; i < maxTile**2 + 0; i++) {
         const tile = document.createElement('div');
-        tile.classList.add('div-borders');
-        // tile.addEventListener('mouseenter', setTileColor, false);
-        // tile.addEventListener('mousedown', setTileColor, false);
+        // tile.classList.add('div-borders');
         tileGrid.appendChild(tile);
     }
 }
 
-// tileGrid mouse-move event
+// tileGrid mouse-over event
 function setTileColor(ev){
     if (!ev.buttons>0) return;
     const r = getRandomInt;
@@ -47,14 +45,20 @@ function setTileColor(ev){
     if (colorMode == 'random') color = `hsl(${r(359)}deg, ${r(55, 85)}%, ${r(40, 60)}%)`;
     else if (colorMode == 'single') color = singleColor;
     else if (colorMode == 'darken') color = RGB_Linear_Shade(-0.2, preColor);
-    else if (colorMode == 'lighter') color = RGB_Linear_Shade(0.2, preColor)
+    else if (colorMode == 'lighter') color = RGB_Linear_Shade(0.2, preColor);
+    else if (colorMode == 'erase') color = currentBg;
     ev.target.style.backgroundColor = color;
-    // console.log(color);
+    // console.log(ev);
 }
 
-// color-input change event
-const colorWell = (e)=>{
+// colorWell-input change event
+const colorWell = (e) =>{
     singleColor = e.target.value;
+}
+// colorWellBg-input change event
+const colorWellBg = (e )=>{
+    currentBg = e.target.value;
+    tileGrid.style.backgroundColor = currentBg;
 }
 
 // new button click event
@@ -63,7 +67,6 @@ function newPanel(){
     n = (+n)?(+n):defaultSize;
     n = n>99?99:n<2?2:n;
     currentSize = n;
-    console.log('new panel', n);
     tileGrid.replaceChildren();
     createPanel(n);
 }
@@ -85,10 +88,12 @@ let currentSize = defaultSize;
 
 let colorMode = 'random';
 let singleColor = 'rgb(150, 150, 150)'
+let currentBg = tileGrid.style.backgroundColor;
 
 document.querySelector('#colorWell').addEventListener('change', colorWell);
 document.querySelector('.new').addEventListener('click', newPanel);
 document.querySelector('.clear').addEventListener('click', clearPanel);
+document.querySelector('#colorWell-bg').addEventListener('change', colorWellBg);
 
 modeBtn.forEach((el,)=>{
     el.addEventListener('click', setActiveMode);
@@ -104,3 +109,16 @@ const main = ()=>{
 window.addEventListener('load', main, false);
 
 console.log(document.styleSheets[0].cssRules.item(9).style['border']='');
+
+
+window.addEventListener('keydown', e=>{
+    // !e.repeat?console.log(e):false ;
+    if (!e.repeat&&e.code.startsWith('Digit')) {
+        const clickEv = new MouseEvent('click', {bubbles: true, cancelable: true});
+        const aA = modeBtn.item(e.code.slice(-1)-1);
+        // console.log(aa);
+        // const eraseBtn = document.querySelector("button[data-mode='erase']");
+        // eraseBtn.dispatchEvent(clickEv);
+        if(aA) aA.dispatchEvent(clickEv);
+    }
+})
