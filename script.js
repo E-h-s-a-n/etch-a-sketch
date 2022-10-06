@@ -44,8 +44,8 @@ function setTileColor(ev){
     let color;
     if (colorMode == 'random') color = `hsl(${r(359)}deg, ${r(55, 85)}%, ${r(40, 60)}%)`;
     else if (colorMode == 'single') color = singleColor;
-    else if (colorMode == 'darken') color = RGB_Linear_Shade(-0.2, preColor);
-    else if (colorMode == 'lighter') color = RGB_Linear_Shade(0.2, preColor);
+    else if (colorMode == 'darken') color = RGB_Linear_Shade(-0.15, preColor);
+    else if (colorMode == 'lighter') color = RGB_Linear_Shade(0.15, preColor);
     else if (colorMode == 'erase') color = currentBg;
     ev.target.style.backgroundColor = color;
     // console.log(ev);
@@ -63,7 +63,7 @@ const colorWellBg = (e )=>{
 
 // new button click event
 function newPanel(){
-    let n = prompt('Chose a size for the drawing pane:', 16);
+    let n = prompt('Chose a size for the drawing pane:'+'<br><br>'+'between 2 and 100', defaultSize);
     n = (+n)?(+n):defaultSize;
     n = n>99?99:n<2?2:n;
     currentSize = n;
@@ -77,48 +77,58 @@ function clearPanel(){
     createPanel(currentSize)
 }
 
+function toggleBorders(ev){
+    const border = "1px solid #C0C0C0";
+    const cssStyle = document.styleSheets[0].cssRules[8].style;
+    if (!borders) {
+        cssStyle['border-right'] = border;
+        cssStyle['border-bottom'] = border;
+        borders = true;
+        ev.target.textContent='borders On'
+    } else {
+        cssStyle['border-right'] = '';
+        cssStyle['border-bottom'] = '';
+        borders = false;
+        ev.target.textContent='borders Off'
+    }
+}
 
 const tileGrid = document.querySelector('.container');
 const modeBtn = document.querySelectorAll('button.mode');
 const randomSelect = document.querySelector('#random');
 const panelSizeSpan = document.querySelector('h3 span');
 
-const defaultSize = 16;
+const defaultSize = 24;
 let currentSize = defaultSize;
-
 let colorMode = 'random';
 let singleColor = 'rgb(150, 150, 150)'
 let currentBg = tileGrid.style.backgroundColor;
+let borders = false
 
 document.querySelector('#colorWell').addEventListener('change', colorWell);
 document.querySelector('.new').addEventListener('click', newPanel);
 document.querySelector('.clear').addEventListener('click', clearPanel);
 document.querySelector('#colorWell-bg').addEventListener('change', colorWellBg);
+document.querySelector('.borders').addEventListener('click', toggleBorders);
 
 modeBtn.forEach((el,)=>{
     el.addEventListener('click', setActiveMode);
-});
-
+})
 
 const main = ()=>{
-    currentSize = 24;
+    // currentSize = 24;
     createPanel(currentSize);
     tileGrid.addEventListener('mouseover', setTileColor);
 }
 
 window.addEventListener('load', main, false);
-
-console.log(document.styleSheets[0].cssRules.item(9).style['border']='');
-
-
 window.addEventListener('keydown', e=>{
-    // !e.repeat?console.log(e):false ;
     if (!e.repeat&&e.code.startsWith('Digit')) {
+        const button = modeBtn.item(e.code.slice(-1)-1);
+        if(!button) return; // error
         const clickEv = new MouseEvent('click', {bubbles: true, cancelable: true});
-        const aA = modeBtn.item(e.code.slice(-1)-1);
-        // console.log(aa);
-        // const eraseBtn = document.querySelector("button[data-mode='erase']");
-        // eraseBtn.dispatchEvent(clickEv);
-        if(aA) aA.dispatchEvent(clickEv);
+        button.dispatchEvent(clickEv);
     }
 })
+
+

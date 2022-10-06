@@ -26,23 +26,16 @@ h2,h3,h4,select {
     height: 700px;
     background-color: rgb(250, 250, 250);
     box-shadow: 0 0 0 3px #000;
-    border-radius: 10px;
 }
 .container {
     display: grid;
     border: none;
     user-select: none;
 }
+/* index = 8 */
 .container > div {
     transition: background-color 0.09s cubic-bezier(0, 0.34, 0.57, 0.01);
 }
- /* index 10 */
-.div-borders {
-    border: none;
-    border-top: none;
-    border-left: none;
-}
-
 .main {
     display: flex;
     flex-wrap: wrap;
@@ -73,12 +66,12 @@ button {
     border-radius: 2rem;
     text-align: center;
     border: none;
-    transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+    transition: all .4s cubic-bezier(0.215, 0.610, 0.355, 1), transform 0.1s;
 }
 
 .active-mode {
-    transform: scale(1.03, 1);
-    top: 1px;
+    transform: scale(0.96, .96);
+    top: 2px;
     color: rgb(255, 255, 255);
     background-color: rgb(80, 80, 80);
     box-shadow: 0 0 2px 2px rgb(0, 0, 0),
@@ -89,7 +82,7 @@ button:hover {
     color: aliceblue;
 }
 .action:active{
-    
+    transform: scale(.95, .95);
 }
 
 .mode-option {
