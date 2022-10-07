@@ -1,2 +1,7 @@
 # etch-a-sketch
-a simple html javascript drawing tool
+
+A simple html javascript drawing tool
+
+## Screenshot
+
+![Screenshot](./Screenshot.png)

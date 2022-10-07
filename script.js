@@ -116,7 +116,7 @@ modeBtn.forEach((el,)=>{
 })
 
 const main = ()=>{
-    // currentSize = 24;
+    currentSize = 24;
     createPanel(currentSize);
     tileGrid.addEventListener('mouseover', setTileColor);
 }
