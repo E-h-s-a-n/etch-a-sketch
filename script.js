@@ -1,5 +1,6 @@
 // https://stackoverflow.com/a/13542669/
 const RGB_Linear_Shade=(p,c)=>{
+    // c in rgb format
     if(c.length<9)return;
     var i=parseInt,r=Math.round,
     [a,b,c,d]=c.split(","),
@@ -15,6 +16,12 @@ function getRandomInt(min, max){
     return Math.floor(Math.random()*(max-min+1)+min);
 }
 
+function getRandomFloat(min, max, precision) {
+    return
+}
+
+console.clear()
+
 // Color modes button click event
 function setActiveMode(){
     modeBtn.forEach((el)=>{
@@ -23,7 +30,6 @@ function setActiveMode(){
     this.classList.add('active-mode');
     colorMode = this.getAttribute('data-mode');
 }
-console.clear()
 
 function createPanel(maxTile = 16){
     tileGrid.style.gridTemplateColumns = `repeat(${maxTile}, 1fr)`;
@@ -42,10 +48,10 @@ function setTileColor(ev){
     const r = getRandomInt;
     const preColor = ev.target.style.backgroundColor;
     let color;
-    if (colorMode == 'random') color = `hsl(${r(359)}deg, ${r(55, 85)}%, ${r(40, 60)}%)`;
+    if (colorMode == 'random') color = `hsl(${r(359)}deg, ${r(60, 85)}%, ${r(45, 65)}%)`;
     else if (colorMode == 'single') color = singleColor;
-    else if (colorMode == 'darken') color = RGB_Linear_Shade(-0.15, preColor);
-    else if (colorMode == 'lighter') color = RGB_Linear_Shade(0.15, preColor);
+    else if (colorMode == 'darken') color = RGB_Linear_Shade(-0.10, preColor);
+    else if (colorMode == 'lighter') color = RGB_Linear_Shade(0.10, preColor);
     else if (colorMode == 'erase') color = currentBg;
     ev.target.style.backgroundColor = color;
     // console.log(ev);
@@ -56,14 +62,15 @@ const colorWell = (e) =>{
     singleColor = e.target.value;
 }
 // colorWellBg-input change event
-const colorWellBg = (e )=>{
+const colorWellBg = (e)=>{
     currentBg = e.target.value;
     tileGrid.style.backgroundColor = currentBg;
 }
 
 // new button click event
 function newPanel(){
-    let n = prompt('Chose a size for the drawing pane:'+'<br><br>'+'between 2 and 100', defaultSize);
+    let n = prompt('Chose a size for the drawing pane:\n *A number between 2 and 100', defaultSize);
+    if (n==null || n=="") return
     n = (+n)?(+n):defaultSize;
     n = n>99?99:n<2?2:n;
     currentSize = n;
@@ -73,8 +80,10 @@ function newPanel(){
 
 // clear button click event
 function clearPanel(){
+    const c = confirm('Are you sure to Clear?');
+    if(!c) return;
     tileGrid.replaceChildren();
-    createPanel(currentSize)
+    createPanel(currentSize);
 }
 
 function toggleBorders(ev){
