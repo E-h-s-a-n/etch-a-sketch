@@ -1,6 +1,6 @@
 // https://stackoverflow.com/a/13542669/
 const RGB_Linear_Shade=(p,c)=>{
-    // c in rgb format
+
     if(c.length<9)return;
     var i=parseInt,r=Math.round,
     [a,b,c,d]=c.split(","),
@@ -20,15 +20,25 @@ function getRandomFloat(min, max, precision) {
     return
 }
 
-console.clear()
+const colorSingle=()=>{
+    return singleColor;
+}
 
-// Color modes button click event
-function setActiveMode(){
-    modeBtn.forEach((el)=>{
-        el.classList.remove('active-mode');
-    });
-    this.classList.add('active-mode');
-    colorMode = this.getAttribute('data-mode');
+const colorRandom=()=>{
+    const r = getRandomInt;
+    return `hsl(${r(359)}deg, ${r(60, 85)}%, ${r(45, 65)}%)`;
+}
+
+const colorErase=()=>{
+    return "";
+}
+
+const colorDarken=()=>{
+    return RGB_Linear_Shade(-0.1, preColor);
+}
+
+const colorLighter=()=>{
+    return RGB_Linear_Shade(0.1, preColor)
 }
 
 function createPanel(maxTile = 16){
@@ -37,24 +47,31 @@ function createPanel(maxTile = 16){
     panelSizeSpan.textContent = `${maxTile}x${maxTile}`;
     for (let i = 0; i < maxTile**2 + 0; i++) {
         const tile = document.createElement('div');
-        // tile.classList.add('div-borders');
         tileGrid.appendChild(tile);
     }
+}
+
+// Color modes button click event
+function setActiveMode(){
+    modeBtn.forEach((el)=>{
+        el.classList.remove('active-mode');
+    });
+    this.classList.add('active-mode');
+    colorMode = this.getAttribute('data-mode');
+
+    if (colorMode=='random') color = colorRandom;
+    else if (colorMode=='single') color = colorSingle;
+    else if (colorMode=='darken') color = colorDarken;
+    else if (colorMode=='lighter') color = colorLighter;
+    else if (colorMode == 'erase') color = colorErase;
+    else color = colorRandom;
 }
 
 // tileGrid mouse-over event
 function setTileColor(ev){
     if (!ev.buttons>0) return;
-    const r = getRandomInt;
-    const preColor = ev.target.style.backgroundColor;
-    let color;
-    if (colorMode == 'random') color = `hsl(${r(359)}deg, ${r(60, 85)}%, ${r(45, 65)}%)`;
-    else if (colorMode == 'single') color = singleColor;
-    else if (colorMode == 'darken') color = RGB_Linear_Shade(-0.10, preColor);
-    else if (colorMode == 'lighter') color = RGB_Linear_Shade(0.10, preColor);
-    else if (colorMode == 'erase') color = currentBg;
-    ev.target.style.backgroundColor = color;
-    // console.log(ev);
+    preColor = ev.target.style.backgroundColor;
+    ev.target.style.backgroundColor = color();
 }
 
 // colorWell-input change event
@@ -109,10 +126,12 @@ const panelSizeSpan = document.querySelector('h3 span');
 
 const defaultSize = 24;
 let currentSize = defaultSize;
-let colorMode = 'random';
-let singleColor = 'rgb(150, 150, 150)'
+
+let singleColor = 'rgb(150, 150, 150)';
+let color = colorRandom;
+let preColor = "";
 let currentBg = tileGrid.style.backgroundColor;
-let borders = false
+let borders = false;
 
 document.querySelector('#colorWell').addEventListener('change', colorWell);
 document.querySelector('.new').addEventListener('click', newPanel);
@@ -125,7 +144,7 @@ modeBtn.forEach((el,)=>{
 })
 
 const main = ()=>{
-    currentSize = 24;
+    currentSize = defaultSize;
     createPanel(currentSize);
     tileGrid.addEventListener('mouseover', setTileColor);
 }

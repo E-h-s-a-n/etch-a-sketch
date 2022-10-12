@@ -4,4 +4,4 @@ A simple html javascript drawing tool
 
 ## Screenshot
 
-![Screenshot](./Screenshot.png)
+![Screenshot](./Screenshot_1.png)
