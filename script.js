@@ -50,7 +50,6 @@ function createPanel(maxTile = 16){
         tileGrid.appendChild(tile);
     }
 }
-
 // Color modes button click event
 function setActiveMode(){
     modeBtn.forEach((el)=>{
@@ -66,14 +65,12 @@ function setActiveMode(){
     else if (colorMode == 'erase') color = colorErase;
     else color = colorRandom;
 }
-
 // tileGrid mouse-over event
 function setTileColor(ev){
     if (!ev.buttons>0) return;
     preColor = ev.target.style.backgroundColor;
     ev.target.style.backgroundColor = color();
 }
-
 // colorWell-input change event
 const colorWell = (e) =>{
     singleColor = e.target.value;
@@ -83,7 +80,6 @@ const colorWellBg = (e)=>{
     currentBg = e.target.value;
     tileGrid.style.backgroundColor = currentBg;
 }
-
 // new button click event
 function newPanel(){
     let n = prompt('Chose a size for the drawing pane:\n *A number between 2 and 100', defaultSize);
@@ -94,7 +90,6 @@ function newPanel(){
     tileGrid.replaceChildren();
     createPanel(n);
 }
-
 // clear button click event
 function clearPanel(){
     const c = confirm('Are you sure to Clear?');
@@ -102,7 +97,7 @@ function clearPanel(){
     tileGrid.replaceChildren();
     createPanel(currentSize);
 }
-
+// border on/off click event
 function toggleBorders(ev){
     const border = "1px solid #C0C0C0";
     const cssStyle = document.styleSheets[0].cssRules[8].style;
@@ -123,10 +118,11 @@ const tileGrid = document.querySelector('.container');
 const modeBtn = document.querySelectorAll('button.mode');
 const randomSelect = document.querySelector('#random');
 const panelSizeSpan = document.querySelector('h3 span');
+const borderBtn = document.querySelector('.borders');
+const clearBtn = document.querySelector('.clear');
 
 const defaultSize = 24;
 let currentSize = defaultSize;
-
 let singleColor = 'rgb(150, 150, 150)';
 let color = colorRandom;
 let preColor = "";
@@ -135,10 +131,10 @@ let borders = false;
 
 document.querySelector('#colorWell').addEventListener('change', colorWell);
 document.querySelector('.new').addEventListener('click', newPanel);
-document.querySelector('.clear').addEventListener('click', clearPanel);
 document.querySelector('#colorWell-bg').addEventListener('change', colorWellBg);
-document.querySelector('.borders').addEventListener('click', toggleBorders);
 
+clearBtn.addEventListener('click', clearPanel);
+borderBtn.addEventListener('click', toggleBorders);
 modeBtn.forEach((el,)=>{
     el.addEventListener('click', setActiveMode);
 })
@@ -150,13 +146,18 @@ const main = ()=>{
 }
 
 window.addEventListener('load', main, false);
+
 window.addEventListener('keydown', e=>{
-    if (!e.repeat&&e.code.startsWith('Digit')) {
-        const button = modeBtn.item(e.code.slice(-1)-1);
-        if(!button) return; // error
+    if (!e.repeat) {
+        console.log(e);
         const clickEv = new MouseEvent('click', {bubbles: true, cancelable: true});
-        button.dispatchEvent(clickEv);
+        if (e.code.startsWith('Digit')){
+            const button = modeBtn.item(e.code.slice(-1)-1);
+            if(!button) return; // error
+            button.dispatchEvent(clickEv);
+        } 
+        else if (e.code=='KeyB') borderBtn.dispatchEvent(clickEv);
+        else if (e.code=='KeyC') clearBtn.dispatchEvent(clickEv);
+        
     }
-})
-
-
+});

@@ -37,7 +37,7 @@ h2,h3,h4,select {
 }
 /* index = 8 */
 .container > div {
-    transition: background-color 0.09s cubic-bezier(0, 0.34, 0.57, 0.01);
+    transition: background-color 0.07s cubic-bezier(0, 0.34, 0.57, 0.01);
 }
 .main {
     display: flex;
