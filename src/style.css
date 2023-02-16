@@ -9,13 +9,13 @@
 html {
     box-sizing: border-box;
 }
+
 body {
     font: 0.9em/1.2 'Noto Sans Mono', monospace;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
-
 .main-body {
     width: 95%;
     max-width: 1200px;
@@ -27,7 +27,7 @@ h2,h3,h4,select {
 .grid-wrapper {
     width: 700px;
     height: 700px;
-    background-color: rgb(250, 250, 250);
+    background-color: rgb(255, 255, 255);
     box-shadow: 0 0 0 3px #000;
 }
 .container {
