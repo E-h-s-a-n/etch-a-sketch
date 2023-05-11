@@ -17,6 +17,7 @@ function createPanel(maxTile = 16){
 }
 
 const main = ()=>{
+    currentSize = 34
     createPanel(currentSize, true);
 }
 
@@ -32,7 +33,7 @@ r = getRandInt
 
 AliDivs.forEach((el, key)=>{
     el.style.backgroundColor=`hsl(${r(360)}deg, 80%, 50%)`;
-    let i = getRandFloat(0.25, 0.65);
+    let i = getRandFloat(0.2, 0.6);
     el.style.animationDuration = `${i}s`;
 });
 
